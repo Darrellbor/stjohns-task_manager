@@ -3,3 +3,7 @@
 
 # ignore environment variable
 .env
+
+#ignore keys (public/private)
+/cert/id_rsa
+/cert/id_rsa.pem

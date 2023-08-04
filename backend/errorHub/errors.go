@@ -1,4 +1,4 @@
-package error
+package errorhub
 
 import (
 	"time"
@@ -8,18 +8,18 @@ import (
 
 func New(code int, message interface{}) *ErrorResponse {
 	return &ErrorResponse{
-		Code: code,
+		Code:    code,
 		Message: message,
-	};
+	}
 }
 
 func (err *ErrorResponse) Execute(ctx *gin.Context) {
-	errorObj := Error{
-		Method: ctx.Request.Method,
-		Path: ctx.Request.URL.Path,
-		Code: err.Code,
-		timestamp:  time.Now().Format(time.RFC1123),
-		Message: err.Message,
+	errorObj := error{
+		Method:    ctx.Request.Method,
+		Path:      ctx.Request.URL.Path,
+		Code:      err.Code,
+		Timestamp: time.Now().Format(time.RFC1123),
+		Message:   err.Message,
 	}
 
 	ctx.AbortWithStatusJSON(err.Code, errorObj)
