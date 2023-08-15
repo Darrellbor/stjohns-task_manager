@@ -4,6 +4,7 @@ import (
 	"net/http"
 
 	"github.com/Darrellbor/stjohns-task_manager/backend/database/models"
+	"github.com/Darrellbor/stjohns-task_manager/backend/errorhub"
 	"github.com/gin-gonic/gin"
 	"github.com/golodash/galidator"
 )
@@ -74,4 +75,21 @@ func FetchAdminUsersController(ctx *gin.Context) {
 	}
 
 	ctx.JSON(http.StatusOK, adminUsers)
+}
+
+func DeleteAdminUserController(ctx *gin.Context) {
+	email := ctx.Param("email")
+
+	if email == "" {
+		err := errorhub.New(http.StatusBadRequest, "The email is required")
+		err.Execute(ctx)
+	} else {
+		err := DeleteAdminUserService(email)
+		if err != nil {
+			err.Execute(ctx)
+			return
+		}
+
+		ctx.JSON(http.StatusOK, gin.H{"message": "Admin User Successfully Deleted"})
+	}
 }

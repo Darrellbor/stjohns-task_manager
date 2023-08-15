@@ -1,6 +1,7 @@
 package admin
 
 import (
+	"fmt"
 	"net/http"
 
 	"github.com/Darrellbor/stjohns-task_manager/backend/cert"
@@ -12,7 +13,7 @@ import (
 
 func RegisterService(newAdmin RegisterDTO, loggedInUser models.Admin) (RegisterRO, *errorhub.ErrorResponse) {
 	var checkUser models.Admin
-	database.Conn.First(&checkUser, "email = ?", newAdmin.Email)
+	database.Conn.Unscoped().First(&checkUser, "email = ?", newAdmin.Email)
 
 	if checkUser.ID != 0 {
 		return RegisterRO{}, errorhub.New(http.StatusBadRequest, "Admin user with this email already exists")
@@ -71,10 +72,10 @@ func FetchAdminUsersService(loggedInUserId uint) ([]AdminUsersRO, *errorhub.Erro
 	var adminUsersList []AdminUsersRO
 	result := database.Conn.Find(&adminUsers)
 
-	if result.Error != nil {
-		return []AdminUsersRO{}, errorhub.New(http.StatusBadRequest, "An error occured trying to retrieve admin users")
-	} else if result.RowsAffected == 0 {
+	if result.RowsAffected == 0 {
 		return []AdminUsersRO{}, errorhub.New(http.StatusNotFound, "There are no admin users to return")
+	} else if result.Error != nil {
+		return []AdminUsersRO{}, errorhub.New(http.StatusBadRequest, "An error occured trying to retrieve admin users")
 	}
 
 	for _, adminUser := range adminUsers {
@@ -89,4 +90,22 @@ func FetchAdminUsersService(loggedInUserId uint) ([]AdminUsersRO, *errorhub.Erro
 	}
 
 	return adminUsersList, nil
+}
+
+func DeleteAdminUserService(email string) *errorhub.ErrorResponse {
+	var userToDelete models.Admin
+	result := database.Conn.First(&userToDelete, "email = ?", email)
+
+	if result.RowsAffected == 0 {
+		return errorhub.New(http.StatusBadRequest, fmt.Sprintf("User with email %s could not be found", email))
+	} else if result.Error != nil {
+		return errorhub.New(http.StatusBadRequest, "An error occured while trying to delete admin user")
+	}
+
+	result = database.Conn.Where("email = ?", email).Delete(&userToDelete)
+	if result.Error != nil {
+		return errorhub.New(http.StatusBadRequest, "An error occured while trying to delete admin user")
+	}
+
+	return nil
 }
