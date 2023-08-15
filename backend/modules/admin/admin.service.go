@@ -17,7 +17,7 @@ func RegisterService(newAdmin RegisterDTO, loggedInUser models.Admin) (RegisterR
 	if checkUser.ID != 0 {
 		return RegisterRO{}, errorhub.New(http.StatusBadRequest, "Admin user with this email already exists")
 	}
-	
+
 	passwordHash, err := bcrypt.GenerateFromPassword([]byte(newAdmin.Password), 10)
 
 	if err != nil {
@@ -64,4 +64,29 @@ func LoginService(checkUser LoginDTO) (LoginRO, *errorhub.ErrorResponse) {
 		Message: "Admin user successfully logged in",
 		Token:   token,
 	}, nil
+}
+
+func FetchAdminUsersService(loggedInUserId uint) ([]AdminUsersRO, *errorhub.ErrorResponse) {
+	var adminUsers []models.Admin
+	var adminUsersList []AdminUsersRO
+	result := database.Conn.Find(&adminUsers)
+
+	if result.Error != nil {
+		return []AdminUsersRO{}, errorhub.New(http.StatusBadRequest, "An error occured trying to retrieve admin users")
+	} else if result.RowsAffected == 0 {
+		return []AdminUsersRO{}, errorhub.New(http.StatusNotFound, "There are no admin users to return")
+	}
+
+	for _, adminUser := range adminUsers {
+		adminUsersList = append(
+			adminUsersList,
+			AdminUsersRO{
+				Email:          adminUser.Email,
+				FullName:       adminUser.FullName,
+				IsLoggedInUser: loggedInUserId == adminUser.ID,
+			},
+		)
+	}
+
+	return adminUsersList, nil
 }

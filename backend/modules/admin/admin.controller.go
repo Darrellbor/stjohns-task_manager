@@ -62,3 +62,16 @@ func LoginController(ctx *gin.Context) {
 		ctx.JSON(http.StatusOK, retrievedUser)
 	}
 }
+
+func FetchAdminUsersController(ctx *gin.Context) {
+	loggedInUser, _ := ctx.Get("user")
+	typedLoggedInUser, _ := loggedInUser.(models.Admin)
+	adminUsers, err := FetchAdminUsersService(typedLoggedInUser.ID)
+
+	if err != nil {
+		err.Execute(ctx)
+		return
+	}
+
+	ctx.JSON(http.StatusOK, adminUsers)
+}

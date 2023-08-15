@@ -1,7 +1,7 @@
 package admin
 
 type RegisterDTO struct {
-	FullName string `json:"fullname" binding:"required,contains= "`
+	FullName string `json:"fullName" binding:"required,contains= "`
 	Email    string `json:"email" binding:"required"`
 	Password string `json:"password" binding:"required,min=8,max=32"`
 }
@@ -24,4 +24,10 @@ type LoginDTO struct {
 type LoginRO struct {
 	Message string `json:"message"`
 	Token   string `json:"token"`
+}
+
+type AdminUsersRO struct {
+	FullName       string `json:"fullName"`
+	Email          string `json:"email"`
+	IsLoggedInUser bool   `json:"isLoggedInUser"`
 }

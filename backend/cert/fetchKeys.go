@@ -2,15 +2,15 @@ package cert
 
 import (
 	"crypto/rsa"
-	"io/ioutil"
 	"net/http"
+	"os"
 
 	"github.com/Darrellbor/stjohns-task_manager/backend/errorhub"
 	"github.com/golang-jwt/jwt/v5"
 )
 
 func parseRsaFromPemPrv() (*rsa.PrivateKey, *errorhub.ErrorResponse) {
-	prvKey, err := ioutil.ReadFile("./cert/id_rsa")
+	prvKey, err := os.ReadFile("./cert/id_rsa")
 	if err != nil {
 		return nil, errorhub.New(http.StatusBadRequest, "Error occured parsing keys from PEM")
 	}
@@ -24,7 +24,7 @@ func parseRsaFromPemPrv() (*rsa.PrivateKey, *errorhub.ErrorResponse) {
 }
 
 func parseRsaFromPemPub() (*rsa.PublicKey, *errorhub.ErrorResponse) {
-	pubKey, err := ioutil.ReadFile("./cert/id_rsa.pem")
+	pubKey, err := os.ReadFile("./cert/id_rsa.pem")
 	if err != nil {
 		return nil, errorhub.New(http.StatusBadRequest, err.Error())
 	}

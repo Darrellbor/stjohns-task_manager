@@ -11,7 +11,7 @@ build:
 	cd bin/app && zip upload.zip main
 
 lint:
-	golangci-lint run .
+	golangci-lint run
 
 test:
 	go test .
