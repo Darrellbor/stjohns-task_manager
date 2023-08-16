@@ -8,6 +8,11 @@ import (
 	cors "github.com/itsjamie/gin-cors"
 )
 
+/*
+# CorsMiddleWare
+
+This method acts as a global middleware and simply implements a CORS middleware
+*/
 func CorsMiddleware() gin.HandlerFunc {
 	frontendUri := os.Getenv("FRONTEND_URI")
 

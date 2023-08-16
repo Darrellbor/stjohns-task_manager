@@ -11,6 +11,14 @@ import (
 
 var g = galidator.New()
 
+/*
+# RegisterController
+
+This function takes in the gin context, validates the request body using
+the galidator package. If there is an error returns it in the errors object
+and if there is no error, call the register service and check if there is 
+a returned error. If there is execute it else return a json
+*/
 func RegisterController(ctx *gin.Context) {
 	var validator = g.Validator(RegisterDTO{}, galidator.Messages{
 		"required": "$field is required",
@@ -38,6 +46,14 @@ func RegisterController(ctx *gin.Context) {
 	}
 }
 
+/*
+# LoginController
+
+This function takes in the gin context, validates the request body using
+the galidator package. If there is an error returns it in the errors object
+and if there is no error, call the login service and check if there is 
+a returned error. If there is execute it else return a json
+*/
 func LoginController(ctx *gin.Context) {
 	var validator = g.Validator(LoginDTO{}, galidator.Messages{
 		"required": "$field is required",
@@ -64,6 +80,13 @@ func LoginController(ctx *gin.Context) {
 	}
 }
 
+/*
+# FetchAdminUsersController
+
+This function takes in the gin context, retrieves the logged in user from the auth guard middleware, 
+call the fetch admin user service and check if there is 
+a returned error. If there is execute it else return a json
+*/
 func FetchAdminUsersController(ctx *gin.Context) {
 	loggedInUser, _ := ctx.Get("user")
 	typedLoggedInUser, _ := loggedInUser.(models.Admin)
@@ -77,6 +100,13 @@ func FetchAdminUsersController(ctx *gin.Context) {
 	ctx.JSON(http.StatusOK, adminUsers)
 }
 
+/*
+# DeleteAdminUserController
+
+This function takes in the gin context, retrieves the email field from the URI param, 
+and validates it. Call the delete admin user service and check if there is 
+a returned error. If there is execute it else return a json
+*/
 func DeleteAdminUserController(ctx *gin.Context) {
 	email := ctx.Param("email")
 
