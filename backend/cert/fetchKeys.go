@@ -9,6 +9,12 @@ import (
 	"github.com/golang-jwt/jwt/v5"
 )
 
+/*
+# parseRsaFromPemPrv
+
+This method is responsible for fetching the private key from this folder and parsing it
+into a format that is usable via code
+*/
 func parseRsaFromPemPrv() (*rsa.PrivateKey, *errorhub.ErrorResponse) {
 	prvKey, err := os.ReadFile("./cert/id_rsa")
 	if err != nil {
@@ -23,6 +29,12 @@ func parseRsaFromPemPrv() (*rsa.PrivateKey, *errorhub.ErrorResponse) {
 	return key, nil
 }
 
+/*
+# parseRsaFromPemPub
+
+This method is responsible for fetching the public key from this folder and parsing it
+into a format that is usable via code
+*/
 func parseRsaFromPemPub() (*rsa.PublicKey, *errorhub.ErrorResponse) {
 	pubKey, err := os.ReadFile("./cert/id_rsa.pem")
 	if err != nil {

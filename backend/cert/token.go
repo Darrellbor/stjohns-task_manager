@@ -1,3 +1,6 @@
+/*
+Package cert encompassing all functions that deal with generating, parsing and using RSA keys
+*/
 package cert
 
 import (
@@ -11,6 +14,12 @@ import (
 	"github.com/golang-jwt/jwt/v5"
 )
 
+/*
+# IssueToken
+
+This method receives the user model and returns a jwt token string bound to that 
+supplied user and also an errorhub ErrorResponse
+*/
 func IssueToken(user models.Admin) (string, *errorhub.ErrorResponse) {
 	key, parseErr := parseRsaFromPemPrv()
 
@@ -31,6 +40,13 @@ func IssueToken(user models.Admin) (string, *errorhub.ErrorResponse) {
 	return token, nil
 }
 
+
+/*
+# ValidateToken
+
+This method receives the jwt authorization string and returns the admin user if everything checks out
+or an errorhub ErrorResponse if something goes wrong
+*/
 func ValidateToken(authorization string) (models.Admin, *errorhub.ErrorResponse) {
 	key, parseErr := parseRsaFromPemPub()
 

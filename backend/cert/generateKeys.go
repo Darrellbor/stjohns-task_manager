@@ -9,6 +9,12 @@ import (
 	"os"
 )
 
+/*
+# GenerateKeys
+
+This method is responsible for generating RSA public and private keys, encoding them 
+and saving them to this folder/module cert
+*/
 func GenerateKeys() {
 	// Generate a new RSA private key with 2048 bits
 	privateKey, err := rsa.GenerateKey(rand.Reader, 2048)
