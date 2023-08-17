@@ -14,10 +14,10 @@ import (
 /*
 # RegisterService
 
-This service takes in the new admin user data and the logged in user data and 
-attempts to create a new user. 
+This service takes in the new admin user data and the logged in user data and
+attempts to create a new user.
 
-To do this it 
+To do this it
 - checks if the user previously exists,
 - encrypt the supplied password
 - formats the repsonse object
@@ -57,10 +57,10 @@ func RegisterService(newAdmin RegisterDTO, loggedInUser models.Admin) (RegisterR
 /*
 # LoginService
 
-This service takes in the admin user attempting to login and 
-attempts to login that user 
+This service takes in the admin user attempting to login and
+attempts to login that user
 
-To do this it 
+To do this it
 - checks if the user exists,
 - compare the supplied password with the hashed saved password
 - issues a new jwt token
@@ -97,10 +97,10 @@ func LoginService(checkUser LoginDTO) (LoginRO, *errorhub.ErrorResponse) {
 /*
 # FetchAdminUsersService
 
-This service takes in the logged in user data and 
+This service takes in the logged in user data and
 returns all the users in the database
 
-To do this it 
+To do this it
 - finds all users
 - checks if there are rows to return
 - checks if an error occured and
@@ -136,9 +136,9 @@ func FetchAdminUsersService(loggedInUserId uint) ([]AdminUsersRO, *errorhub.Erro
 /*
 # DeleteAdminUserService
 
-This service takes in an email and attempts to delete that email
+# This service takes in an email and attempts to delete that email
 
-To do this it 
+To do this it
 - find the user in the database
 - checks if there are rows to return
 - checks if an error occured

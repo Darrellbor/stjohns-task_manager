@@ -1,4 +1,4 @@
-// package database is the package that holds everything relating to 
+// package database is the package that holds everything relating to
 // the database and it's interaction
 package database
 

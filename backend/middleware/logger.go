@@ -11,7 +11,7 @@ import (
 # Logger
 
 This middleware handles formatting logs on a global scales
-it basically logs to the console in a format that inclues 
+it basically logs to the console in a format that inclues
 - ClientIP
 - Timestamp
 - The requested method

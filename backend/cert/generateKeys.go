@@ -12,7 +12,7 @@ import (
 /*
 # GenerateKeys
 
-This method is responsible for generating RSA public and private keys, encoding them 
+This method is responsible for generating RSA public and private keys, encoding them
 and saving them to this folder/module cert
 */
 func GenerateKeys() {

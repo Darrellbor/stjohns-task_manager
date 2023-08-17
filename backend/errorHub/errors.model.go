@@ -17,8 +17,8 @@ type error struct {
 /*
 # ErrorResponse
 
-This is the structure that is prepared when a new errorhub is created and 
-is what is the pointer to this that is passed around functions until it is finally 
+This is the structure that is prepared when a new errorhub is created and
+is what is the pointer to this that is passed around functions until it is finally
 executed.
 */
 type ErrorResponse struct {

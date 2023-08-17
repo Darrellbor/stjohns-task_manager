@@ -16,7 +16,7 @@ var g = galidator.New()
 
 This function takes in the gin context, validates the request body using
 the galidator package. If there is an error returns it in the errors object
-and if there is no error, call the register service and check if there is 
+and if there is no error, call the register service and check if there is
 a returned error. If there is execute it else return a json
 */
 func RegisterController(ctx *gin.Context) {
@@ -51,7 +51,7 @@ func RegisterController(ctx *gin.Context) {
 
 This function takes in the gin context, validates the request body using
 the galidator package. If there is an error returns it in the errors object
-and if there is no error, call the login service and check if there is 
+and if there is no error, call the login service and check if there is
 a returned error. If there is execute it else return a json
 */
 func LoginController(ctx *gin.Context) {
@@ -83,8 +83,8 @@ func LoginController(ctx *gin.Context) {
 /*
 # FetchAdminUsersController
 
-This function takes in the gin context, retrieves the logged in user from the auth guard middleware, 
-call the fetch admin user service and check if there is 
+This function takes in the gin context, retrieves the logged in user from the auth guard middleware,
+call the fetch admin user service and check if there is
 a returned error. If there is execute it else return a json
 */
 func FetchAdminUsersController(ctx *gin.Context) {
@@ -103,8 +103,8 @@ func FetchAdminUsersController(ctx *gin.Context) {
 /*
 # DeleteAdminUserController
 
-This function takes in the gin context, retrieves the email field from the URI param, 
-and validates it. Call the delete admin user service and check if there is 
+This function takes in the gin context, retrieves the email field from the URI param,
+and validates it. Call the delete admin user service and check if there is
 a returned error. If there is execute it else return a json
 */
 func DeleteAdminUserController(ctx *gin.Context) {

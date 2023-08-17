@@ -25,7 +25,7 @@ func New(code int, message interface{}) *ErrorResponse {
 # ErrorResponse.Execute
 
 This method exists as part of ErrorResponse and simply takes the gin context,
-prepares the error object and aborts with the previously stored code and the 
+prepares the error object and aborts with the previously stored code and the
 prepared object
 */
 func (err *ErrorResponse) Execute(ctx *gin.Context) {

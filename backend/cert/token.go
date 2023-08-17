@@ -17,7 +17,7 @@ import (
 /*
 # IssueToken
 
-This method receives the user model and returns a jwt token string bound to that 
+This method receives the user model and returns a jwt token string bound to that
 supplied user and also an errorhub ErrorResponse
 */
 func IssueToken(user models.Admin) (string, *errorhub.ErrorResponse) {
@@ -39,7 +39,6 @@ func IssueToken(user models.Admin) (string, *errorhub.ErrorResponse) {
 
 	return token, nil
 }
-
 
 /*
 # ValidateToken

@@ -1,4 +1,4 @@
-// Package admin - this module houses all functionality that partains to an admin of the 
+// Package admin - this module houses all functionality that partains to an admin of the
 // application and what it can do and the data it holds
 package admin
 

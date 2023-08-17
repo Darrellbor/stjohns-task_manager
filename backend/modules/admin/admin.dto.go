@@ -16,7 +16,7 @@ type RegisterDTO struct {
 # RegisterUserRO
 
 This is the response object for registration user object
-that is simply the fields that are expected from registration 
+that is simply the fields that are expected from registration
 user object
 */
 type RegisterUserRO struct {
@@ -28,7 +28,7 @@ type RegisterUserRO struct {
 # RegisterRO
 
 This is the response object for registration
-that is simply the fields that are expected from registration or 
+that is simply the fields that are expected from registration or
 simply the data that is returned to the user after registration
 */
 type RegisterRO struct {
@@ -51,7 +51,7 @@ type LoginDTO struct {
 # LoginRO
 
 This is the response object for login
-that is simply the fields that are expected from login or 
+that is simply the fields that are expected from login or
 simply the data that is returned to the user after login
 */
 type LoginRO struct {
@@ -63,7 +63,7 @@ type LoginRO struct {
 # AdminUsersRO
 
 This is the response object for fetching admin users
-that is simply the fields that are expected from FetchAdminUsers or 
+that is simply the fields that are expected from FetchAdminUsers or
 simply the data that is returned to the user after FetchAdminUsers
 */
 type AdminUsersRO struct {
