@@ -11,7 +11,8 @@ type error struct {
 	Path      string      `json:"path"`
 	Code      int         `json:"code"`
 	Timestamp string      `json:"timestamp"`
-	Message   interface{} `json:"message"`
+	Message   string      `json:"message"`
+	Errors    interface{} `json:"errors"`
 }
 
 /*
@@ -23,5 +24,5 @@ executed.
 */
 type ErrorResponse struct {
 	Code    int
-	Message interface{}
+	Message []interface{}
 }
