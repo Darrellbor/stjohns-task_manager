@@ -28,8 +28,8 @@ func RegisterController(ctx *gin.Context) {
 	})
 
 	var adminUser RegisterDTO
-	err := ctx.ShouldBindJSON(&adminUser)
-	if err != nil {
+	
+	if err := ctx.ShouldBindJSON(&adminUser); err != nil {
 		validationErr := errorhub.New(http.StatusBadRequest, "Validation Failed", validator.DecryptErrors(err))
 		validationErr.Execute(ctx)
 	} else {
@@ -61,8 +61,8 @@ func LoginController(ctx *gin.Context) {
 	})
 
 	var adminUser LoginDTO
-	err := ctx.ShouldBindJSON(&adminUser)
-	if err != nil {
+	
+	if err := ctx.ShouldBindJSON(&adminUser); err != nil {
 		validationErr := errorhub.New(http.StatusBadRequest, "Validation Failed", validator.DecryptErrors(err))
 		validationErr.Execute(ctx)
 	} else {
