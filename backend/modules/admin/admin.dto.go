@@ -20,8 +20,8 @@ that is simply the fields that are expected from registration
 user object
 */
 type RegisterUserRO struct {
-	FullName string
-	Email    string
+	FullName string `json:"fullName"`
+	Email    string `json:"email"`
 }
 
 /*
