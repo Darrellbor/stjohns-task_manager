@@ -16,7 +16,7 @@ type TaskSettings struct {
 	Day      int
 	Month    int
 	Year     int
-	Time     time.Time
+	Time     time.Time `gorm:"type:time"`
 	IsActive bool
 	SetById  uint
 	SetBy    Admin `gorm:"foreignkey:SetById;constraint:OnUpdate:CASCADE,OnDelete:SET NULL;"`
