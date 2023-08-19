@@ -16,5 +16,6 @@ func TaskSettingsRoutes(server *gin.Engine) {
 	v1 := server.Group("/v1/tasksettings")
 	{
 		v1.POST("/", middleware.AuthGuard, CreateTaskSettingsController)
+		v1.DELETE("/:id", middleware.AuthGuard, DeleteTaskSettingsByIdController)
 	}
 }

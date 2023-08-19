@@ -43,3 +43,13 @@ type CreateTaskSettingsRO struct {
 	Message string `json:"message"`
 	TaskSetting TaskSettingRO `json:"taskSetting"`
 }
+
+/*
+# FetchTaskSettingsRO
+
+This is the response object for fetch task settings
+*/
+type FetchTaskSettingsRO struct {
+	ID uint `json:"id"`
+	TaskSettingRO
+}

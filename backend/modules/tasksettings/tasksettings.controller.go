@@ -2,6 +2,7 @@ package tasksettings
 
 import (
 	"net/http"
+	"strconv"
 
 	"github.com/Darrellbor/stjohns-task_manager/backend/database/models"
 	"github.com/Darrellbor/stjohns-task_manager/backend/errorhub"
@@ -39,5 +40,30 @@ func CreateTaskSettingsController(ctx *gin.Context) {
 		}
 
 		ctx.JSON(http.StatusCreated, newTaskSetting)
+	}
+}
+
+/*
+# DeleteTaskSettingsByIdController
+
+This function takes in the gin context, validates the request for an ID param
+Calls the service and if there are errors execute them. If not return a Json of the response
+*/
+func DeleteTaskSettingsByIdController(ctx *gin.Context) {
+	id := ctx.Param("id")
+
+	if id == "" {
+		err := errorhub.New(http.StatusBadRequest, "The id of the task setting is required")
+		err.Execute(ctx)
+	} else {
+		typedId, _ := strconv.Atoi(id)
+		err := DeleteTaskSettingsByIdService(uint(typedId))
+
+		if err != nil {
+			err.Execute(ctx)
+			return
+		}
+
+		ctx.JSON(http.StatusOK, gin.H{"message": "Task Setting Successfully Deleted"})
 	}
 }
