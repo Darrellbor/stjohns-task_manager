@@ -17,6 +17,6 @@ func TaskCategoriesRoutes(server *gin.Engine) {
 		v1.POST("/:taskSettingId", middleware.AuthGuard, CreateTaskCategoriesController)
 		v1.GET("/:taskSettingId", middleware.AuthGuard, FetchTaskCategoriesController)
 		v1.GET("/:taskSettingId/withTasks")
-		v1.DELETE("/:id", middleware.AuthGuard)
+		v1.DELETE("/:id", middleware.AuthGuard, DeleteTaskCategoriesController)
 	}
 }

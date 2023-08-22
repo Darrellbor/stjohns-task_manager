@@ -51,7 +51,7 @@ func CreateTaskCategoriesController(ctx *gin.Context) {
 /*
 # FetchTaskCategoriesController
 
-This function takes in the gin context, validates the request for an ID param
+This function takes in the gin context, validates the request for an task setting ID param
 Calls the service and if there are errors execute them. If not return a Json of the response
 */
 func FetchTaskCategoriesController(ctx *gin.Context) {
@@ -73,5 +73,30 @@ func FetchTaskCategoriesController(ctx *gin.Context) {
 			"message":        "Task Categories Successfully Retrieved",
 			"taskCategories": taskCategories,
 		})
+	}
+}
+
+/*
+# DeleteTaskCategoriesController
+
+This function takes in the gin context, validates the request for an ID param
+Calls the service and if there are errors execute them. If not return a Json of the response
+*/
+func DeleteTaskCategoriesController(ctx *gin.Context) {
+	id := ctx.Param("id")
+
+	if id == "" {
+		err := errorhub.New(http.StatusBadRequest, "The id of the task category is required")
+		err.Execute(ctx)
+	} else {
+		typedId, _ := strconv.Atoi(id)
+		err := DeleteTaskCategoryService(uint(typedId))
+
+		if err != nil {
+			err.Execute(ctx)
+			return
+		}
+
+		ctx.JSON(http.StatusOK, gin.H{"message": "Task Category Successfully Deleted"})
 	}
 }

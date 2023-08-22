@@ -69,3 +69,26 @@ func FetchTaskCategoriesService(taskSettingId uint) ([]FetchTaskCategoriesRO, *e
 	}
 	return taskCategoriesList, nil
 }
+
+/*
+# DeleteTaskCategoryService
+
+- check that the task category exists
+- if it exists delete it and if it doesn't send back an error
+*/
+func DeleteTaskCategoryService(id uint) *errorhub.ErrorResponse {
+	var taskCategoryToDelete models.TaskCategories
+	result := database.Conn.First(&taskCategoryToDelete, id)
+
+	if result.RowsAffected == 0 {
+		return errorhub.New(http.StatusBadRequest, "Task category ID could not be found")
+	} else if result.Error != nil {
+		return errorhub.New(http.StatusBadRequest, "An error occured while trying to delete task category")
+	}
+
+	result = database.Conn.Delete(&taskCategoryToDelete, id)
+	if result.Error != nil {
+		return errorhub.New(http.StatusBadRequest, "An error occured while trying to delete task category")
+	}
+	return nil
+}
