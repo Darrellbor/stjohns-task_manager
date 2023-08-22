@@ -47,3 +47,31 @@ func CreateTaskCategoriesController(ctx *gin.Context) {
 		ctx.JSON(http.StatusCreated, gin.H{"message": "Task Categories successfully created", "taskCategories": taskcategories})
 	}
 }
+
+/*
+# FetchTaskCategoriesController
+
+This function takes in the gin context, validates the request for an ID param
+Calls the service and if there are errors execute them. If not return a Json of the response
+*/
+func FetchTaskCategoriesController(ctx *gin.Context) {
+	taskSettingId := ctx.Param("taskSettingId")
+
+	if taskSettingId == "" {
+		err := errorhub.New(http.StatusBadRequest, "The id of the task setting is required")
+		err.Execute(ctx)
+	} else {
+		typedTaskSettingId, _ := strconv.Atoi(taskSettingId)
+		taskCategories, err := FetchTaskCategoriesService(uint(typedTaskSettingId))
+
+		if err != nil {
+			err.Execute(ctx)
+			return
+		}
+
+		ctx.JSON(http.StatusOK, gin.H{
+			"message":        "Task Categories Successfully Retrieved",
+			"taskCategories": taskCategories,
+		})
+	}
+}
