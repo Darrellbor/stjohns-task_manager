@@ -14,6 +14,7 @@ func AutoMigrate() {
 	err := Conn.Debug().AutoMigrate(
 		&models.Admin{},
 		&models.TaskSettings{},
+		&models.TaskCategories{},
 	)
 
 	if err != nil {
