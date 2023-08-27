@@ -23,6 +23,7 @@ require (
 	github.com/golang/protobuf v1.5.3 // indirect
 	github.com/golodash/galidator v1.3.4 // indirect
 	github.com/golodash/godash v1.3.0 // indirect
+	github.com/google/uuid v1.3.1 // indirect
 	github.com/itsjamie/gin-cors v0.0.0-20220228161158-ef28d3d2a0a8 // indirect
 	github.com/jinzhu/copier v0.3.5 // indirect
 	github.com/jinzhu/inflection v1.0.0 // indirect

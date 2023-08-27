@@ -7,6 +7,7 @@ import (
 	"github.com/Darrellbor/stjohns-task_manager/backend/database"
 	"github.com/Darrellbor/stjohns-task_manager/backend/database/models"
 	"github.com/Darrellbor/stjohns-task_manager/backend/errorhub"
+	"github.com/google/uuid"
 )
 
 /*
@@ -33,11 +34,18 @@ func CreateTaskService(newTask CreateTaskDTO) (CreateTaskRO, *errorhub.ErrorResp
 
 	if result.RowsAffected > 0 {
 		return CreateTaskRO{}, errorhub.New(http.StatusBadRequest, "Volunteer already exists on this task category")
-	} else if result.Error != nil {
-		return CreateTaskRO{}, errorhub.New(http.StatusBadRequest, "An error occured while trying to check task")
+	} else if result.Error != nil && result.RowsAffected != 0 {
+		return CreateTaskRO{}, errorhub.New(http.StatusBadRequest, "An error occured while trying to check task", result.Error)
 	}
 
-	task := models.Tasks{FullName: newTask.FullName, Email: newTask.Email, EmailNotification: newTask.EmailNotification, TaskCategoryId: newTask.TaskCategoryId}
+	verificationKey := uuid.New()
+	task := models.Tasks{
+		FullName: newTask.FullName, 
+		Email: newTask.Email, 
+		EmailNotification: newTask.EmailNotification, 
+		VerificationKey: verificationKey.String(), 
+		TaskCategoryId: newTask.TaskCategoryId,
+	}
 	result = database.Conn.Create(&task)
 
 	if result.Error != nil {
