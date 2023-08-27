@@ -15,6 +15,7 @@ func AutoMigrate() {
 		&models.Admin{},
 		&models.TaskSettings{},
 		&models.TaskCategories{},
+		&models.Tasks{},
 	)
 
 	if err != nil {

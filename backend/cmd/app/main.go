@@ -9,6 +9,7 @@ import (
 	"github.com/Darrellbor/stjohns-task_manager/backend/middleware"
 	"github.com/Darrellbor/stjohns-task_manager/backend/modules/admin"
 	"github.com/Darrellbor/stjohns-task_manager/backend/modules/taskcategories"
+	"github.com/Darrellbor/stjohns-task_manager/backend/modules/tasks"
 	"github.com/Darrellbor/stjohns-task_manager/backend/modules/tasksettings"
 	"github.com/Darrellbor/stjohns-task_manager/backend/shared"
 	"github.com/gin-gonic/gin"
@@ -39,6 +40,7 @@ func main() {
 	admin.AdminRoutes(server)
 	tasksettings.TaskSettingsRoutes(server)
 	taskcategories.TaskCategoriesRoutes(server)
+	tasks.TasksRoutes(server)
 
 	port := os.Getenv("PORT")
 
