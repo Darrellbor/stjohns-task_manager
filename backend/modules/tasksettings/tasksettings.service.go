@@ -60,7 +60,7 @@ func FetchTaskSettingsService(year int) ([]FetchTaskSettingsRO, *errorhub.ErrorR
 	result := database.Conn.Where("year = ?", year).Find(&taskSettings)
 
 	if result.RowsAffected == 0 {
-		return []FetchTaskSettingsRO{}, errorhub.New(http.StatusBadRequest, fmt.Sprintf("There are no task settings to return in %d", year))
+		return []FetchTaskSettingsRO{}, errorhub.New(http.StatusNotFound, fmt.Sprintf("There are no task settings to return in %d", year))
 	} else if result.Error != nil {
 		return []FetchTaskSettingsRO{}, errorhub.New(http.StatusBadRequest, "An error occured trying to retrieve task settings")
 	}
@@ -98,7 +98,7 @@ func DeleteTaskSettingsByIdService(id uint) (*errorhub.ErrorResponse) {
 
 
 	if result.RowsAffected == 0 {
-		return errorhub.New(http.StatusBadRequest, "Task Setting could not be found")
+		return errorhub.New(http.StatusNotFound, "Task Setting could not be found")
 	} else if result.Error != nil {
 		return errorhub.New(http.StatusBadRequest, "An error occured while trying to delete task setting")
 	}

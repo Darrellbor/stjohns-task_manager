@@ -6,6 +6,7 @@ import (
 	"github.com/Darrellbor/stjohns-task_manager/backend/database"
 	"github.com/Darrellbor/stjohns-task_manager/backend/database/models"
 	"github.com/Darrellbor/stjohns-task_manager/backend/errorhub"
+	"github.com/Darrellbor/stjohns-task_manager/backend/modules/tasks"
 )
 
 /*
@@ -21,7 +22,7 @@ func CreateTaskCategoriesService(newTaskCategories []CreateTaskCategoriesDTO, ta
 	result := database.Conn.First(&checkTaskSetting, taskSettingId)
 
 	if result.RowsAffected == 0 {
-		return errorhub.New(http.StatusBadRequest, "Task Setting could not be found")
+		return errorhub.New(http.StatusNotFound, "Task Setting could not be found")
 	} else if result.Error != nil {
 		return errorhub.New(http.StatusBadRequest, "An error occured while trying to fetch task setting")
 	}
@@ -71,6 +72,40 @@ func FetchTaskCategoriesService(taskSettingId uint) ([]FetchTaskCategoriesRO, *e
 }
 
 /*
+# FetchTaskCategoriesWithTasksService
+
+- receive the taskSettingId
+- call the FetchTaskCategoriesService with the taskSettingId and
+- if there are no errors, call the fetch tasks service and pass the category ID for each
+- return the category list with tasks
+*/
+func FetchTaskCategoriesWithTasksService(taskSettingId uint) ([]FetchTaskCategoriesWithTasksRO, *errorhub.ErrorResponse) {
+	var taskCategoriesWithTasks []FetchTaskCategoriesWithTasksRO
+	taskCategories, err := FetchTaskCategoriesService(taskSettingId)
+
+	if err != nil {
+		return []FetchTaskCategoriesWithTasksRO{}, err
+	}
+
+	for _, taskCategory := range taskCategories {
+		tasks, err := tasks.FetchTasksByCategory(taskCategory.ID)
+
+		if err != nil && err.Code != http.StatusNotFound {
+			return []FetchTaskCategoriesWithTasksRO{}, err
+		}
+
+		taskCategoriesWithTasks = append(taskCategoriesWithTasks, FetchTaskCategoriesWithTasksRO{
+			ID:           taskCategory.ID,
+			Name:         taskCategory.Name,
+			PeopleNeeded: taskCategory.PeopleNeeded,
+			Tasks:        tasks,
+		})
+	}
+
+	return taskCategoriesWithTasks, nil
+}
+
+/*
 # DeleteTaskCategoryService
 
 - check that the task category exists
@@ -78,12 +113,19 @@ func FetchTaskCategoriesService(taskSettingId uint) ([]FetchTaskCategoriesRO, *e
 */
 func DeleteTaskCategoryService(id uint) *errorhub.ErrorResponse {
 	var taskCategoryToDelete models.TaskCategories
+	var tasksForCategoryExists models.Tasks
 	result := database.Conn.First(&taskCategoryToDelete, id)
 
 	if result.RowsAffected == 0 {
-		return errorhub.New(http.StatusBadRequest, "Task category ID could not be found")
+		return errorhub.New(http.StatusNotFound, "Task category ID could not be found")
 	} else if result.Error != nil {
 		return errorhub.New(http.StatusBadRequest, "An error occured while trying to delete task category")
+	}
+
+	result = database.Conn.Where("task_category_id = ?", taskCategoryToDelete.ID).Find(&tasksForCategoryExists)
+
+	if result.RowsAffected > 0 {
+		return errorhub.New(http.StatusBadRequest, "You cannot delete this category because volunteers have already shown interest")
 	}
 
 	result = database.Conn.Delete(&taskCategoryToDelete, id)

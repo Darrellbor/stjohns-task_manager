@@ -21,11 +21,12 @@ import (
 func CreateTaskService(newTask CreateTaskDTO) (CreateTaskRO, *errorhub.ErrorResponse) {
 	var categoryExists models.TaskCategories
 	var taskExists models.Tasks
+	var allTasks []models.Tasks
 
 	result := database.Conn.First(&categoryExists, newTask.TaskCategoryId)
 
 	if result.RowsAffected == 0 {
-		return CreateTaskRO{}, errorhub.New(http.StatusBadRequest, "Volunteer cannot be created for a non-existent category")
+		return CreateTaskRO{}, errorhub.New(http.StatusNotFound, "Volunteer cannot be created for a non-existent category")
 	} else if result.Error != nil {
 		return CreateTaskRO{}, errorhub.New(http.StatusBadRequest, "An error occured while trying to check task category")
 	}
@@ -35,7 +36,17 @@ func CreateTaskService(newTask CreateTaskDTO) (CreateTaskRO, *errorhub.ErrorResp
 	if result.RowsAffected > 0 {
 		return CreateTaskRO{}, errorhub.New(http.StatusBadRequest, "Volunteer already exists on this task category")
 	} else if result.Error != nil && result.RowsAffected != 0 {
-		return CreateTaskRO{}, errorhub.New(http.StatusBadRequest, "An error occured while trying to check task", result.Error)
+		return CreateTaskRO{}, errorhub.New(http.StatusBadRequest, "An error occured while trying to check task")
+	}
+
+	result = database.Conn.Where("task_category_id = ? AND verified = ?", newTask.TaskCategoryId, true).Find(&allTasks)
+
+	if result.Error != nil && result.RowsAffected != 0 {
+		return CreateTaskRO{}, errorhub.New(http.StatusBadRequest, "An error occured while trying to check all tasks")
+	}
+
+	if result.RowsAffected == int64(categoryExists.PeopleNeeded) {
+		return CreateTaskRO{}, errorhub.New(http.StatusBadRequest, "Maximum number of volunteers reached")
 	}
 
 	verificationKey := uuid.New()
@@ -73,17 +84,28 @@ func CreateTaskService(newTask CreateTaskDTO) (CreateTaskRO, *errorhub.ErrorResp
 */
 func VerifyTaskService(taskToVerify VerifyTaskDTO) (VerifyTaskRO, *errorhub.ErrorResponse) {
 	var taskExists models.Tasks
+	var allTasks []models.Tasks
 
-	result := database.Conn.First(&taskExists, "email = ? AND verification_key = ?", taskToVerify.Email, taskToVerify.Key)
+	result := database.Conn.Preload("TaskCategory").First(&taskExists, "email = ? AND verification_key = ?", taskToVerify.Email, taskToVerify.Key)
 
 	if result.RowsAffected == 0 {
-		return VerifyTaskRO{}, errorhub.New(http.StatusBadRequest, "Volunteer could not be found")
+		return VerifyTaskRO{}, errorhub.New(http.StatusNotFound, "Volunteer could not be found")
 	} else if result.Error != nil {
 		return VerifyTaskRO{}, errorhub.New(http.StatusBadRequest, "An error occured while trying to check task")
 	}
 
 	if taskExists.Verified {
 		return VerifyTaskRO{}, errorhub.New(http.StatusBadRequest, "Volunteer has already been verified")
+	}
+
+	result = database.Conn.Where("task_category_id = ? AND verified = ?", taskExists.TaskCategoryId, true).Find(&allTasks)
+
+	if result.Error != nil && result.RowsAffected != 0 {
+		return VerifyTaskRO{}, errorhub.New(http.StatusBadRequest, "An error occured while trying to check all tasks")
+	}
+
+	if result.RowsAffected == int64(taskExists.TaskCategory.PeopleNeeded) {
+		return VerifyTaskRO{}, errorhub.New(http.StatusBadRequest, "Maximum number of volunteers reached")
 	}
 
 	taskExists.Verified = true
@@ -114,15 +136,15 @@ func FetchTasksByCategory(taskCategoryId uint) ([]TaskRO, *errorhub.ErrorRespons
 	result := database.Conn.First(&categoryExists, taskCategoryId)
 
 	if result.RowsAffected == 0 {
-		return []TaskRO{}, errorhub.New(http.StatusBadRequest, "Cannot retrieve volunteers for a non-existent category")
+		return []TaskRO{}, errorhub.New(http.StatusNotFound, "Cannot retrieve volunteers for a non-existent category")
 	} else if result.Error != nil {
 		return []TaskRO{}, errorhub.New(http.StatusBadRequest, "An error occured while trying to check task category")
 	}
 
-	result = database.Conn.Where("task_category_id = ?", taskCategoryId).Find(&tasks)
+	result = database.Conn.Where("task_category_id = ? AND verified = ?", taskCategoryId, true).Find(&tasks)
 
 	if result.RowsAffected == 0 {
-		return []TaskRO{}, errorhub.New(http.StatusBadRequest, "There are no volunteers for this category")
+		return []TaskRO{}, errorhub.New(http.StatusNotFound, "There are no volunteers for this category")
 	} else if result.Error != nil {
 		return []TaskRO{}, errorhub.New(http.StatusBadRequest, "An error occured while trying to fetch volunteers")
 	}
