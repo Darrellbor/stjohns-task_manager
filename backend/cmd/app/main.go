@@ -8,6 +8,7 @@ import (
 	"github.com/Darrellbor/stjohns-task_manager/backend/database"
 	"github.com/Darrellbor/stjohns-task_manager/backend/middleware"
 	"github.com/Darrellbor/stjohns-task_manager/backend/modules/admin"
+	"github.com/Darrellbor/stjohns-task_manager/backend/modules/calendar"
 	"github.com/Darrellbor/stjohns-task_manager/backend/modules/taskcategories"
 	"github.com/Darrellbor/stjohns-task_manager/backend/modules/tasks"
 	"github.com/Darrellbor/stjohns-task_manager/backend/modules/tasksettings"
@@ -41,6 +42,7 @@ func main() {
 	tasksettings.TaskSettingsRoutes(server)
 	taskcategories.TaskCategoriesRoutes(server)
 	tasks.TasksRoutes(server)
+	calendar.CalendarRoutes(server)
 
 	port := os.Getenv("PORT")
 

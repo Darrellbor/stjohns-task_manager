@@ -79,7 +79,7 @@ func FetchTaskCategoriesController(ctx *gin.Context) {
 /*
 # FetchTaskCategoriesWithTasksController
 
-This function takes in the gin context, validates the request for an task setting ID param
+This function takes in the gin context, validates the request for a task setting ID param
 Calls the service and if there are errors execute them. If not return a Json of the response
 */
 func FetchTaskCategoriesWithTasksController(ctx *gin.Context) {
