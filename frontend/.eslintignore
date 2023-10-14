@@ -1,0 +1,7 @@
+/node_modules
+/build
+/_templates
+/coverage
+/reports
+/.eslintrc.js
+/jest.config.js
