@@ -56,7 +56,10 @@ returns them. If an error occurs it returns that too
 */
 func FetchTaskSettingsService(year int) ([]FetchTaskSettingsRO, *errorhub.ErrorResponse) {
 	var taskSettings []models.TaskSettings
+	var taskCategories []models.TaskCategories
+	var tasks []models.Tasks
 	var taskSettingsList []FetchTaskSettingsRO
+
 	result := database.Conn.Where("year = ?", year).Find(&taskSettings)
 
 	if result.RowsAffected == 0 {
@@ -66,10 +69,37 @@ func FetchTaskSettingsService(year int) ([]FetchTaskSettingsRO, *errorhub.ErrorR
 	}
 
 	for _, taskSetting := range taskSettings {
+		//retrieve all the task categories with this taskSettingID
+		var tasksCount int
+		var tasksFilled bool
+		result = database.Conn.Where("task_settings_id = ?", taskSetting.ID).Find(&taskCategories)
+
+		if result.Error != nil {
+			return []FetchTaskSettingsRO{}, errorhub.New(http.StatusBadRequest, "An error occured trying to retrieve task categories")
+		}
+
+		for _, taskCategory := range taskCategories {
+			//for each task category, check for the tasks that have the task category ID and is verified
+			result = database.Conn.Where("task_category_id = ? AND verified = ?", taskCategory.ID, true).Find(&tasks)
+
+			if result.Error != nil {
+				return []FetchTaskSettingsRO{}, errorhub.New(http.StatusBadRequest, "An error occured trying to retrieve tasks")
+			}
+
+			if len(tasks) == taskCategory.PeopleNeeded {
+				tasksCount++
+			}
+		}
+
+		if len(taskCategories) == tasksCount {
+			tasksFilled = true
+		}
+
 		taskSettingsList = append(
 			taskSettingsList,
 			FetchTaskSettingsRO{
 				ID: taskSetting.ID,
+				TasksFilled: tasksFilled,
 				TaskSettingRO: TaskSettingRO{
 					Day:       taskSetting.Day,
 					Month:     taskSetting.Month,

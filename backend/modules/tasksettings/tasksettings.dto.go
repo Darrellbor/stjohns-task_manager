@@ -51,5 +51,6 @@ This is the response object for fetch task settings
 */
 type FetchTaskSettingsRO struct {
 	ID uint `json:"id"`
+	TasksFilled bool
 	TaskSettingRO
 }
