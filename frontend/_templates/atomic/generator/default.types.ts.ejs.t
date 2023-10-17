@@ -7,3 +7,10 @@ export interface <%= propsName %> {
    */
   value: string;
 }
+
+export interface <%= stylePropName %> {
+  /**
+   * Put description for style prop here
+   */
+  $value: string;
+}

@@ -2,8 +2,6 @@ import styled, { css } from 'styled-components';
 import colors from 'styles/colors';
 import { IDayCalendarStyleProps } from './types';
 
-// type TDivStyles = Pick<IDayCalendarProps, 'date' | 'isActive' | 'isToday' | 'tasksFilled'>;
-
 const setBackgroundColor = (color: string) => {
   return css`
     background-color: ${color};

@@ -51,6 +51,7 @@ module.exports = {
             isTemplate: compType === 'template',
             isOthers: compType === 'other',
             propsName: `I${compName}Props`,
+            stylePropName: `I${compName}StyleProps`,
             storyPath: `${
               compType == 'atom'
                 ? `${compType}s/${compPath !== '.' ? `${compPath}/` : ''}`

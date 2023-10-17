@@ -1,21 +1,19 @@
 ---
 to: "<%= (!isTemplate) ? `${path}/${compName}.stories.tsx` : null %>"
 ---
-import React from 'react';
-import { ComponentStory, ComponentMeta } from '@storybook/react';
-import { RouterDecorator } from 'utils/storybook.utils';
+import { Meta, StoryObj } from '@storybook/react';
 import mock from './mock';
 import { <%= compName %> } from '.';
 
-export default {
+const meta = {
   title: '<%= storyPath %>',
   component: <%= compName %>,
-  decorators: [RouterDecorator],
-} as ComponentMeta<typeof <%= compName %>>;
+  tags: ['autodocs'],
+} satisfies Meta<typeof <%= compName %>>;
 
-const Template: ComponentStory<typeof <%= compName %>> = (args) => (
-    <<%= compName %> {...args} />
-);
+export default meta;
+type TStory = StoryObj<typeof meta>;
 
-export const Success = Template.bind({});
-Success.args = mock.Success;
+export const Success: TStory = {
+  args: mock.Success,
+};

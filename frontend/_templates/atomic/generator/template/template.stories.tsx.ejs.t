@@ -1,33 +1,36 @@
 ---
 to: "<%= !isTemplate ? null : `${path}/${compName}.stories.tsx` %>"
 ---
-import React from 'react';
-import { ComponentStory, ComponentMeta } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react';
 import { EMockType } from 'utils/mock.utils';
-import {
-  RouterDecorator,
-} from 'utils/storybook.utils';
 import { <%= compName %> } from '.';
 import mock from './mock';
 
-export default {
+const meta = {
   title: '<%= storyPath %>',
   component: <%= compName %>,
-  decorators: [RouterDecorator],
-} as ComponentMeta<typeof <%= compName %>>;
+  tags: ['autodocs'],
+} as Meta<typeof <%= compName %>>;
 
-const Success: ComponentStory<typeof <%= compName %>> = () => (
-  <<%= compName %> mock={{ type: EMockType.Success, data: mock.success }} />
-);
+export default meta;
+type TStory = StoryObj<typeof meta>;
 
-const Error: ComponentStory<typeof <%= compName %>> = () => (
-  <<%= compName %> mock={{ type: EMockType.Error, error: mock.error }} />
-);
+export const Success: TStory = {
+  args: {
+     type: EMockType.Success, 
+     data: mock.success
+  },
+};
 
-const Loading: ComponentStory<typeof <%= compName %>> = () => (
-  <<%= compName %> mock={{ type: EMockType.Loading }} />
-);
+export const Error: TStory = {
+  args: {
+     type: EMockType.Error, 
+     data: mock.error
+  },
+};
 
-export const success = Success.bind({});
-export const error = Error.bind({});
-export const loading = Loading.bind({});
+export const Loading: TStory = {
+  args: {
+     type: EMockType.Loading,
+  },
+};

@@ -8,3 +8,10 @@ export interface <%= propsName %> {
    */
   id: number;
 }
+
+export interface <%= stylePropName %> {
+  /**
+   * Put description for style prop here
+   */
+  $id: string;
+}
