@@ -28,9 +28,18 @@ const TasksFilledAndCurrentDay: IDayCalendarProps = {
   tasksFilled: true
 };
 
+const NotInMonth: IDayCalendarProps = {
+  date: 5,
+  isActive: false,
+  isToday: false,
+  tasksFilled: false,
+  notInMonth: true
+};
+
 export default {
   EmptyDay,
   CurrentDay,
   TasksFilled,
-  TasksFilledAndCurrentDay
+  TasksFilledAndCurrentDay,
+  NotInMonth
 };

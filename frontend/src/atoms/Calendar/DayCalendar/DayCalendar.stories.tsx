@@ -6,6 +6,11 @@ const meta = {
   title: 'atoms/Calendar/DayCalendar',
   component: DayCalendar,
   tags: ['autodocs'],
+  argTypes: {
+    onClick: {
+      action: 'onClick',
+    },
+  },
 } satisfies Meta<typeof DayCalendar>;
 
 export default meta;
@@ -25,4 +30,8 @@ export const TasksFilled: TStory = {
 
 export const TasksFilledAndCurrentDay: TStory = {
   args: mock.TasksFilledAndCurrentDay,
+};
+
+export const NotInMonth: TStory = {
+  args: mock.NotInMonth,
 };

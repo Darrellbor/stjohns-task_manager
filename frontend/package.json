@@ -27,6 +27,7 @@
     "lint": "eslint --fix --ext .js,.jsx,.ts,.tsx .",
     "build": "react-scripts build",
     "test": "jest",
+    "test-watch": "jest --watch --verbose",
     "test-clear": "jest --clearCache",
     "eject": "react-scripts eject",
     "sb": "storybook dev -p 6006",
