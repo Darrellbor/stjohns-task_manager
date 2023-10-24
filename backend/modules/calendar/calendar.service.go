@@ -82,7 +82,7 @@ func CalendarByYearService(year int) ([]YearCalendar, *errorhub.ErrorResponse) {
 	frameCalendar := buildCalendar(year)
 	frameTaskSettings, err := tasksettings.FetchTaskSettingsService(year)
 
-	if err != nil {
+	if err != nil && err.Code != 404 {
 		return []YearCalendar{}, err
 	}
 
