@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import breakpoints from 'styles/breakpoints';
 
 const MonthBlock = styled.div`
   display: block;
@@ -14,9 +15,19 @@ const MonthRow = styled.div<{ $first?: boolean }>`
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 25px;
   margin: 20px;
-  ${({ $first }) => $first && `gap: 35px;`}
+  gap: 5px;
+  ${({ $first }) => $first && `gap: 14px;`}
+
+  @media(max-width: ${breakpoints.lg}) {
+    gap: 2.5px;
+    ${({ $first }) => $first && `gap: 11px;`}
+  }
+
+  @media (min-width: ${breakpoints.xxl}) {
+    gap: 25px;
+    ${({ $first }) => $first && `gap: 35px;`}
+  }
 `;
 
 const MonthItem = styled.h4`

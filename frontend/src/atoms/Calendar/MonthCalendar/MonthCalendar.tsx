@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
+import { v4 as uuidV4 } from 'uuid';
 import values from './values';
-import { IMonthCalendarProps, IWeekProps } from './types';
+import { IMonthCalendarProps } from './types';
+import { IWeekProps } from '../types';
 import styles from './MonthCalendar.styles';
 import { DayCalendar } from '../DayCalendar';
 
@@ -84,7 +86,7 @@ const MonthCalendar: React.FC<IMonthCalendarProps> = ({
       <MonthRow>
         {firstRow.map(eachItem => (
           <DayCalendar
-            key={eachItem.id + eachItem.date}
+            key={uuidV4()}
             isActive={eachItem.isActive}
             date={eachItem.date}
             tasksFilled={eachItem.tasksFilled}
@@ -106,7 +108,7 @@ const MonthCalendar: React.FC<IMonthCalendarProps> = ({
             <MonthRow key={idx}>
               {eachRow.map(eachItem => (
                 <DayCalendar
-                  key={eachItem.id + eachItem.date}
+                  key={uuidV4()}
                   isActive={eachItem.isActive}
                   date={eachItem.date}
                   tasksFilled={eachItem.tasksFilled}
@@ -128,7 +130,7 @@ const MonthCalendar: React.FC<IMonthCalendarProps> = ({
       <MonthRow>
         {lastRow.map(eachItem => (
           <DayCalendar
-            key={eachItem.id + eachItem.date}
+            key={uuidV4()}
             isActive={eachItem.isActive}
             date={eachItem.date}
             tasksFilled={eachItem.tasksFilled}
