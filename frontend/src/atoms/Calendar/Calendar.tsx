@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { ICalendarProps } from './types';
+import { ICalendarProps, TChangeMonth } from './types';
 import styles from './Calendar.styles';
 import LeftArrow from 'atoms/Icons/LeftArrow';
 import RightArrow from 'atoms/Icons/RightArrow';
@@ -20,18 +20,23 @@ const Calendar: React.FC<ICalendarProps> = ({
   //get the month and arrange it in the month calendar
   //implement the logic to change year in december and january
 
+  let timer: NodeJS.Timeout;
+  const [changeMonth, setChangeMonth] = useState<TChangeMonth>('in-view');
   const [currentMonth, setCurrentMonth] = useState<number>(new Date().getMonth());
   const [leftMonth, setLeftMonth] = useState<IMonthCalendarProps>();
   const [rightMonth, setRightMonth] = useState<IMonthCalendarProps>();
 
   useEffect(() => {
     setLeftAndRightMonths(currentMonth);
-    console.log('Useeffect wass called');
 
+    return () => {
+      clearTimeout(timer);
+    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [previousYearCalendar, year, currentYearCalendar, nextYearCalendar]);
+  }, []);
 
   const leftBtnClick = () => {
+    setChangeMonth('left');
     let newCurrentMonth = currentMonth - 1;
 
     if (currentMonth % 2 !== 0) {
@@ -46,9 +51,14 @@ const Calendar: React.FC<ICalendarProps> = ({
       setCurrentMonth(newCurrentMonth);
       setLeftAndRightMonths(newCurrentMonth);
     }
+
+    timer = setTimeout(() => {
+      setChangeMonth('in-view');
+    }, 500);
   };
 
   const rightBtnClick = () => {
+    setChangeMonth('right');
     let newCurrentMonth = currentMonth + 1;
 
     if (currentMonth % 2 === 0) {
@@ -63,6 +73,10 @@ const Calendar: React.FC<ICalendarProps> = ({
       setCurrentMonth(newCurrentMonth);
       setLeftAndRightMonths(newCurrentMonth);
     }
+    
+    timer = setTimeout(() => {
+      setChangeMonth('in-view');
+    }, 500);
   };
 
   const setLeftAndRightMonths = (currentMonth: number) => {
@@ -142,7 +156,7 @@ const Calendar: React.FC<ICalendarProps> = ({
   return (
     <CalendarStyled className="Calendar" data-testid="test-Calendar">
       <LeftArrow onClick={leftBtnClick} />
-      <CalendarInner>
+      <CalendarInner $changeMonth={changeMonth}>
         {leftMonth && <MonthCalendar {...leftMonth} />}
         <MidPoint>
           <h2>{year}</h2>

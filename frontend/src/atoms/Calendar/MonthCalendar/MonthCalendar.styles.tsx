@@ -4,6 +4,7 @@ import breakpoints from 'styles/breakpoints';
 const MonthBlock = styled.div`
   display: block;
   width: 100%;
+  min-height: 570px;
 `;
 
 const MonthTitle = styled.h2`

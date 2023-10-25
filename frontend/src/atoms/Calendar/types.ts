@@ -27,10 +27,13 @@ export interface ICalendarProps {
 
 export interface ICalendarStyleProps {
   /**
-   * Put description for style prop here
+   * Change month out is used to control the animation of the months 
+   * leaving and re-entering the page
    */
-  $value: string;
+  $changeMonth: TChangeMonth;
 }
+
+export type TChangeMonth = 'left' | 'right' | 'in-view'
 
 export interface IMonthProps {
   /**
