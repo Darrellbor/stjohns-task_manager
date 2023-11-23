@@ -1,9 +1,16 @@
 import React from 'react';
 import { IIconProps } from 'types/icon';
 
-export const RightArrow: React.FC<IIconProps> = ({ onClick }) => {
+export const RightArrow: React.FC<IIconProps> = ({ id, onClick }) => {
   return (
-    <svg width="85" height="85" viewBox="0 0 85 85" fill="none" onClick={onClick}>
+    <svg
+      id={id}
+      data-testid={id}
+      width="85"
+      height="85"
+      viewBox="0 0 85 85"
+      fill="none"
+      onClick={onClick}>
       <path
         d="M46.2838 41.6921L34.4819 54.6915C33.8581 55.3781 33.9093 56.4407 34.5967 57.0637C35.2825 57.6876 36.346 57.6355 36.969 56.9489L49.7755 42.8441C50.1194 42.4656 50.2509 41.9726 50.1908 41.5022C50.2046 41.0284 50.0269 40.552 49.6483 40.209L35.5452 27.4033C35.2238 27.1107 34.8198 26.9667 34.4166 26.9664C33.9588 26.966 33.5034 27.1521 33.1713 27.5172C32.5483 28.2038 32.5987 29.2665 33.2861 29.8895L46.2838 41.6921Z"
         fill="white"

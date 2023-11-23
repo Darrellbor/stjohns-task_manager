@@ -73,7 +73,7 @@ const Calendar: React.FC<ICalendarProps> = ({
       setCurrentMonth(newCurrentMonth);
       setLeftAndRightMonths(newCurrentMonth);
     }
-    
+
     timer = setTimeout(() => {
       setChangeMonth('in-view');
     }, 500);
@@ -155,7 +155,7 @@ const Calendar: React.FC<ICalendarProps> = ({
 
   return (
     <CalendarStyled className="Calendar" data-testid="test-Calendar">
-      <LeftArrow onClick={leftBtnClick} />
+      <LeftArrow id='left-arrow' onClick={leftBtnClick} />
       <CalendarInner $changeMonth={changeMonth}>
         {leftMonth && <MonthCalendar {...leftMonth} />}
         <MidPoint>
@@ -164,7 +164,7 @@ const Calendar: React.FC<ICalendarProps> = ({
         </MidPoint>
         {rightMonth && <MonthCalendar {...rightMonth} />}
       </CalendarInner>
-      <RightArrow onClick={rightBtnClick} />
+      <RightArrow id='right-arrow' onClick={rightBtnClick} />
     </CalendarStyled>
   );
 };

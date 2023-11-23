@@ -1,3 +1,4 @@
 export interface IIconProps {
-    onClick?: (event: React.MouseEvent<HTMLOrSVGElement>) => void;
+  id?: string;
+  onClick?: (event: React.MouseEvent<HTMLOrSVGElement>) => void;
 }

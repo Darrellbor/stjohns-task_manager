@@ -1,6 +1,6 @@
 const language = {
   en: {
-    title: 'Calendar',
+    title: 'Modal',
   },
 };
 
