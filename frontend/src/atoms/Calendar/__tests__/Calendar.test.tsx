@@ -41,7 +41,7 @@ describe('Calendar atom', () => {
     fireEvent.click(screen.getByTestId('left-arrow'));
 
     if (currentMonth - 2 < 0) {
-      currentMonth = 12;
+      currentMonth = 11;
     } else {
       currentMonth = currentMonth - 2;
     }
