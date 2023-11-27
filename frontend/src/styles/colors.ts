@@ -10,6 +10,7 @@ const colors = {
   backdrop: '#112259',
   transparent: 'transparent',
   yearBorder: '#1122597d',
+  modalBackdrop: '#11225975',
 };
 
 export default colors;

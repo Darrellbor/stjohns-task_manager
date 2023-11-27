@@ -1,6 +1,7 @@
+import React from 'react';
 import type { Preview } from '@storybook/react';
 import { initialize, mswLoader } from 'storybook-msw-addon';
-import { RouterDecorator } from '../src/utils/storybook.utils';
+import { RouterDecorator, StorybookTypography } from '../src/utils/storybook.utils';
 
 // Initialize MSW
 initialize();
@@ -16,7 +17,7 @@ const preview: Preview = {
       },
     },
   },
-  decorators: [RouterDecorator],
+  decorators: [StorybookTypography, RouterDecorator],
 };
 
 export default preview;
