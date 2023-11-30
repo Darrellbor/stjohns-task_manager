@@ -15,14 +15,14 @@ const meta = {
       action: 'onClick',
     },
     width: {
-      control: 'select',
+      control: 'radio',
       options: ['Small', 'Medium', 'Large'],
     },
   },
   decorators: [
     (Story: React.ComponentType) => (
       <>
-        <div style={{ minHeight: 800 }}>
+        <div style={{ height: 700 }}>
           <Story />
         </div>
       </>

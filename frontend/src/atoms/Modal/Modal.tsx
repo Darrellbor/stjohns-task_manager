@@ -22,7 +22,7 @@ const Modal: React.FC<IModalProps> = ({
             <ModalHeading>
               <h2>{title}</h2>
 
-              {showCloseBtn && <ModalClose onClick={onClose} />}
+              {showCloseBtn && <ModalClose id='modal-close' onClick={onClose} />}
             </ModalHeading>
           )}
 

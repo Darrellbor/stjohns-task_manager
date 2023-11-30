@@ -1,6 +1,7 @@
 const language = {
   en: {
-    title: 'Modal',
+    modalTitle: 'Volunteer To Support',
+    modalBody: 'hello',
   },
 };
 

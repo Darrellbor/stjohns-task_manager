@@ -1,8 +1,15 @@
 import styled, { css } from 'styled-components';
 import { IModalStyleProps, IModalBackdropStyleProps, TModalWidth } from './types';
 import colors from 'styles/colors';
+import breakpoints from 'styles/breakpoints';
 
-const setWidth = (width?: TModalWidth) => {
+const setWidth = (width?: TModalWidth, small?: boolean) => {
+  if (small) {
+    return css`
+      max-width: 100%;
+    `;
+  }
+
   if (width && width === 'Small') {
     return css`
       max-width: 400px;
@@ -51,24 +58,26 @@ const ModalBackdrop = styled.div<IModalBackdropStyleProps>`
   background-color: ${colors.modalBackdrop};
 `;
 
-const ModalCover = styled.div<{$width?: TModalWidth}>`
-  overflow: auto;
-  overflow-x: hidden;
+const ModalCover = styled.div<{ $width?: TModalWidth }>`
+  overflow-y: auto;
   position: absolute;
   z-index: 10;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  width: 100%; 
+  width: 100%;
   margin: 0 auto;
   min-height: 600px;
   padding: 80px 0;
-  ${({ $width }) => setWidthForCover($width)}
+  ${({ $width }) => setWidthForCover($width)};
+  -ms-overflow-style: none; /* for Internet Explorer, Edge */
+  scrollbar-width: none; /* for Firefox */
 
   ::-webkit-scrollbar {
-    width: 0px; /* Remove scrollbar space */
-    background: transparent; /* Optional: just make scrollbar invisible */
+    display: none; /* for Chrome, Safari, and Opera */
+    width: 0;
+    height: 0;
   }
 `;
 
@@ -81,6 +90,11 @@ const ModalElement = styled.div<IModalStyleProps>`
   padding: 15px;
   transform: ${({ $isOpen }) => ($isOpen ? 'translateY(0px)' : 'translateY(-9000px)')};
   ${({ $width }) => setWidth($width)}
+
+  @media(max-width: ${breakpoints.md}) {
+    width: auto;
+    ${({ $width }) => setWidth($width, true)}
+  }
 `;
 
 const ModalHeading = styled.div`
