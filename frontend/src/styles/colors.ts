@@ -5,12 +5,18 @@ const colors = {
     filled: '#C32323',
     faded: '#00000059',
   },
+  brand: '#4D5879',
   white: '#ffffff',
   dark: '#333333',
   backdrop: '#112259',
   transparent: 'transparent',
   yearBorder: '#1122597d',
   modalBackdrop: '#11225975',
+  input: {
+    border: '#4d587957',
+    background: '#E7E9F0',
+    placeholder: '#4d587975',
+  },
 };
 
 export default colors;
