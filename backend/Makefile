@@ -26,3 +26,11 @@ tidy:
 fmt:
 	gofmt -s -w .
 
+
+
+# Tip to make compile daemon work
+# git clone git@github.com:githubnemo/CompileDaemon.git
+# cd CompileDaemon
+# go build -o CompileDaemon .
+# chmod +x CompileDaemon
+# sudo mv CompileDaemon /usr/local/bine
