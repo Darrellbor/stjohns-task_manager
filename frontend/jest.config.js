@@ -8,4 +8,5 @@ module.exports = {
   moduleFileExtensions: ['ts', 'tsx', 'js', 'json'],
   modulePaths: ['<rootDir>/src'],
   setupFilesAfterEnv: ['./src/setupTests.ts'],
+  watchPathIgnorePatterns: ['node_modules'],
 };
