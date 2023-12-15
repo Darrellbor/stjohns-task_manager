@@ -17,6 +17,9 @@ const colors = {
     background: '#E7E9F0',
     placeholder: '#4d587975',
   },
+  button: {
+    shadow: '#4d587952',
+  },
 };
 
 export default colors;
