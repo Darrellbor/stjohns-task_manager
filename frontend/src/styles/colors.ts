@@ -20,6 +20,9 @@ const colors = {
   button: {
     shadow: '#4d587952',
   },
+  taskGroup: {
+    detailsBackground: '#C7C8CE',
+  },
 };
 
 export default colors;
