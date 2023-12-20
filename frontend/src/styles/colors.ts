@@ -6,6 +6,7 @@ const colors = {
     faded: '#00000059',
   },
   brand: '#4D5879',
+  backgroundColor: '#112259',
   white: '#ffffff',
   dark: '#333333',
   backdrop: '#112259',
